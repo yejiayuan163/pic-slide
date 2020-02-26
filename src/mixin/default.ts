@@ -1,5 +1,7 @@
 import store from '@/store'
 import {isIphone, isIphoneX} from '@/utils/safe-area'
+import router from '@/router'
+
 // import {PLATFORM} from '@/config'
 
 export default {
@@ -9,6 +11,7 @@ export default {
             data() {
                 return {
                     homeImgUrl: process.env.VUE_APP_HOME_IMG_URL + '/',
+                    staticBase: process.env.VUE_APP_STATIC + '/',
                     hasSaveArea: false // 在小程序则ios全面屏需要预留返回键的位置
                 }
             },
@@ -57,7 +60,8 @@ export default {
                 //     bodyElement[0].scrollIntoView()
                 // },
                 jumpToSlide(item: any) {
-                    this.$router.push(`/template1?id=${item.id}`)
+                    // tslint ignore
+                    router.push(`/template1?id=${item.id}`)
                 }
             }
 

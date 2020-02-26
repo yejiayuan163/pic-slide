@@ -1,18 +1,26 @@
 import {Vue, Component, Prop, Emit, Mixins} from 'vue-property-decorator'
 import {State, namespace, Mutation} from 'vuex-class'
-import HelloWorld from '@/components/HelloWorld.vue'
-import {Tabbar, TabbarItem} from 'vant';
+import { Swipe, SwipeItem } from 'vant';
 
 @Component({
     components: {
-        HelloWorld,
-        Tabbar,
-        TabbarItem
+        Swipe,
+        SwipeItem
     },
     data() {
-        return {}
+        return {
+            picList: [
+                'http://39.105.59.163/image/1.jpg',
+                'http://39.105.59.163/image/2.jpg',
+                'http://39.105.59.163/image/3.jpg',
+                'http://39.105.59.163/image/4.jpg',
+                'http://39.105.59.163/image/5.jpg',
+            ]
+        }
     }
 })
-export default class Template1 extends Vue {
+class Template1 extends Vue {
 
 }
+
+export default Template1
