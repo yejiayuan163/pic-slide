@@ -2,6 +2,7 @@ import {Vue, Component, Prop, Emit, Mixins} from 'vue-property-decorator'
 import {State, namespace, Mutation} from 'vuex-class'
 import HelloWorld from '@/components/HelloWorld.vue'
 import {Tabbar, TabbarItem, Card} from 'vant';
+import {getVideoBase64} from "@/utils/videoHelper";
 
 @Component({
     components: {
@@ -15,81 +16,27 @@ import {Tabbar, TabbarItem, Card} from 'vant';
             active: 0,
             picList: [
                 {
-                    title:'商品标题',
-                    desc:'描述信息巴拉巴拉巴拉巴拉',
-                    id: '12345',
-                    num: '1234',
-                    price: '123',
-                    thumb: '/personal?id=12345'
-                },
-                {
-                    title:'商品标题',
-                    desc:'描述信息巴拉巴拉巴拉巴拉',
-                    id: '12345',
-                    num: '1234',
-                    price: '123',
-                    thumb: '/personal?id=12345'
-                },
-                {
-                    title:'商品标题',
-                    desc:'描述信息巴拉巴拉巴拉巴拉',
-                    id: '12345',
-                    num: '1234',
-                    price: '123',
-                    thumb: '/personal?id=12345'
-                },
-                {
-                    title:'商品标题',
-                    desc:'描述信息巴拉巴拉巴拉巴拉',
-                    id: '12345',
-                    num: '1234',
-                    price: '123',
-                    thumb: '/personal?id=12345'
-                },
-                {
-                    title:'商品标题',
-                    desc:'描述信息巴拉巴拉巴拉巴拉',
-                    id: '12345',
-                    num: '1234',
-                    price: '123',
-                    thumb: '/personal?id=12345'
-                },
-                {
-                    title:'商品标题',
-                    desc:'描述信息巴拉巴拉巴拉巴拉',
-                    id: '12345',
-                    num: '1234',
-                    price: '123',
-                    thumb: '/personal?id=12345'
-                },
-                {
-                    title:'商品标题',
-                    desc:'描述信息巴拉巴拉巴拉巴拉',
-                    id: '12345',
-                    num: '1234',
-                    price: '123',
-                    thumb: '/personal?id=12345'
-                },
-                {
-                    title:'商品标题',
-                    desc:'描述信息巴拉巴拉巴拉巴拉',
-                    id: '12345',
-                    num: '1234',
-                    price: '123',
-                    thumb: '/personal?id=12345'
-                },
-                {
-                    title:'商品标题',
-                    desc:'描述信息巴拉巴拉巴拉巴拉',
-                    id: '12345',
-                    num: '1234',
-                    price: '123',
-                    thumb: '/personal?id=12345'
+                    title: '',
+                    desc: '',
+                    id: '',
+                    num: '',
+                    price: '',
+                    thumb: '',
+                    template: ''
                 }
             ]
         }
     }
 })
 export default class Home extends Vue {
+    public picList!: []
+    public staticBase!: string
+    public $get!: any
 
+    async mounted() {
+        const {code, info} = await this.$get('/slide/list')
+        if (code === '000000') {
+            this.picList = info.picList
+        }
+    }
 }

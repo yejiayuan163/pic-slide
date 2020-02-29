@@ -61,7 +61,7 @@ export default {
                 // },
                 jumpToSlide(item: any) {
                     // tslint ignore
-                    router.push(`/template1?id=${item.id}`)
+                    router.push(`/${item.template}?id=${item.id}`)
                 }
             }
 

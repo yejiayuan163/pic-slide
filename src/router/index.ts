@@ -20,6 +20,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "slide" */ '../views/SlideTemplate/Template1/Template1.vue')
   },
   {
+    path: '/videoPlayer', // 视频播放页
+    name: 'videoPlayer',
+    component: () => import(/* webpackChunkName: "slide" */ '../views/VideoPlayer/VideoPlayer.vue')
+  },
+  {
     path: '/makeSlide',// 制作幻灯片相册
     name: 'makeSlide',
     // route level code-splitting

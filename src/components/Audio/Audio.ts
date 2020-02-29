@@ -1,23 +1,47 @@
-import {Vue, Component, Prop, Emit, Mixins} from 'vue-property-decorator'
+import {Vue, Component, Prop, Emit, Mixins, Watch} from 'vue-property-decorator'
 import {State, namespace, Mutation} from 'vuex-class'
+import {Icon} from 'vant';
 
 @Component({
-    components: {},
+    components: {
+        Icon
+    },
     data() {
         return {
-            songUrl: ''
+            playing: true
         }
     }
 })
 class Audio extends Vue {
-    private songUrl!: string
+    private playing!: boolean
+    @Prop({type: String, default: 'audio/123.mp3'}) musicUrl = '';
 
     public end() {
         return this.loop()
     }
+    @Watch('musicUrl')
+    onMusicUrlChange () {
+        console.log('onMusicUrlChange')
+        this.loop()
+    }
 
     mounted() {
-        console.log('mounted')
+        setTimeout(() => {
+            const audioDom = this.$refs.audio as any
+            this.playing = audioDom.paused ? false : true
+        }, 1000)
+    }
+
+    toggleAudio() {
+        const audioDom = this.$refs.audio as any
+        if (this.playing) {
+            this.playing = false
+            audioDom.pause()
+        } else {
+            this.playing = true
+            audioDom.play()
+
+        }
     }
 
     loop() {
@@ -33,6 +57,11 @@ class Audio extends Vue {
 
     public error() {
         console.log('audio error')
+    }
+
+    public updateTime() {
+        console.log('audio updateTime')
+        // this.playing = true
     }
 }
 

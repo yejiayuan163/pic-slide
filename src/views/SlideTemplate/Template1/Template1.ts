@@ -1,25 +1,38 @@
 import {Vue, Component, Prop, Emit, Mixins} from 'vue-property-decorator'
 import {State, namespace, Mutation} from 'vuex-class'
-import { Swipe, SwipeItem } from 'vant';
+import {Swipe, SwipeItem, Image} from 'vant';
+import Audio from '@/components/Audio/Audio.vue'
 
 @Component({
     components: {
         Swipe,
-        SwipeItem
+        SwipeItem,
+        Audio,
+        VanImage:Image
     },
     data() {
         return {
-            picList: [
-                'http://39.105.59.163/image/1.jpg',
-                'http://39.105.59.163/image/2.jpg',
-                'http://39.105.59.163/image/3.jpg',
-                'http://39.105.59.163/image/4.jpg',
-                'http://39.105.59.163/image/5.jpg',
-            ]
+            collectionInfo: {
+                title: '',
+                musicUrl: '',
+                picList: [
+                ]
+            }
+
         }
     }
 })
 class Template1 extends Vue {
+    public collectionInfo!: object
+    public $get!: any
+    public $route!: any
+    async mounted() {
+        const id = this.$route.query.id
+        const {code, info} = await this.$get('/slide/details', {id})
+        if(code === '000000') {
+            this.collectionInfo = info.collectionInfo
+        }
+    }
 
 }
 

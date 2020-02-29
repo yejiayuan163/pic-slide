@@ -8,7 +8,7 @@
                     :price="item.price"
                     :desc="item.desc"
                     :title="item.title"
-                    thumb="https://img.yzcdn.cn/vant/ipad.jpeg"
+                    :thumb="staticBase+item.thumb"
             />
         </div>
         <tabbar route>
