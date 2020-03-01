@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <video class="s-video" :src="staticBase+ videoInfo.videoSrc" controls="controls">
+        <video class="s-video" ref="video" :src="staticBase+ videoInfo.videoSrc" controls="controls">
             您的浏览器不支持 video 标签。
         </video>
     </div>

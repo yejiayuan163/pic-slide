@@ -7,10 +7,16 @@ axios.defaults.timeout = 5000;
 axios.defaults.withCredentials = false;
 //设定axios的基本的url请求前缀
 axios.defaults.baseURL = process.env.VUE_APP_BASE_API;
+// axios.defaults.crossDomain = true;
 
 // http request 拦截器
 axios.interceptors.request.use(
     config => {
+        config.headers['x-csrf-token'] = '12321321'
+        config.headers['Content-Type'] = 'application/json'
+        if ((config as any).url.match('upload')) {
+            config.headers['Content-Type'] = 'multipart/form-data'
+        }
         return config;
     },
     err => {
@@ -25,7 +31,7 @@ axios.interceptors.response.use(
         return response
     },
     error => {
-        if(error.response){
+        if (error.response) {
             return Promise.reject(error.response.data)
         }
     });
@@ -40,13 +46,13 @@ axios.interceptors.response.use(
 export function get(url: string, params = {}) {
     return new Promise((resolve, reject) => {
         axios({
-            method:'get',
+            method: 'get',
             url: url,
-            params:params,
+            params: params,
         }).then(response => {
-            if(response){
+            if (response) {
                 resolve(response.data);
-            }else {
+            } else {
                 reject('');
             }
         }, err => {
@@ -61,17 +67,17 @@ export function get(url: string, params = {}) {
  * @param data
  * @returns {Promise}
  */
-export function post(url: string, data1 = {}){
+export function post(url: string, data1 = {}) {
     const data = qs.stringify(data1);
     return new Promise((resolve, reject) => {
         axios({
-            method:'post',
+            method: 'post',
             url: url,
-            data:data,
+            data: data1,
         }).then(response => {
-            if(response){
+            if (response) {
                 resolve(response.data);
-            }else {
+            } else {
                 reject('');
             }
         }, err => {
@@ -79,4 +85,5 @@ export function post(url: string, data1 = {}){
         })
     })
 }
+
 export default axios;

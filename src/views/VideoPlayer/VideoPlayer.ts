@@ -28,5 +28,10 @@ export default class VideoPlayer extends Vue {
         if (code === '000000') {
             this.videoInfo = info.videoInfo
         }
+        this.$nextTick( () => {
+            const videoDom = this.$refs.video as any
+            console.log('video play!')
+            videoDom.play()
+        })
     }
 }
