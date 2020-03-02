@@ -1,7 +1,7 @@
 import {Vue, Component, Prop, Emit, Mixins} from 'vue-property-decorator'
 import {State, namespace, Mutation} from 'vuex-class'
 import HelloWorld from '@/components/HelloWorld.vue'
-import {Tabbar, TabbarItem, Uploader, Button} from 'vant';
+import {Tabbar, TabbarItem, Uploader, Button, Field, CellGroup, ActionSheet} from 'vant';
 
 @Component({
     components: {
@@ -9,18 +9,31 @@ import {Tabbar, TabbarItem, Uploader, Button} from 'vant';
         Tabbar,
         TabbarItem,
         Uploader,
-        VanButton: Button
+        VanField: Field,
+        VanCellGroup: CellGroup,
+        VanButton: Button,
+        VanActionSheet: ActionSheet
     },
     data() {
         return {
-            fileList: []
+            fileList: [],
+            title: '相册标题',
+            description: '相册描述',
+            showMusicSheet: false,
+            musicList: [{name: '甜蜜蜜', musicSrc: '123.mp3'}, {name: '666', musicSrc: '456.mp3'}],
+            musicInfo: {name: '甜蜜蜜', musicSrc: '123.mp3'}
         }
     }
 })
 export default class MakeSlide extends Vue {
     public fileList: Array<string> = []
+    public musicList: Array<object> = []
+    public title: string
+    public showMusicSheet: boolean
+    public description: string
     public $post: any
     public slideList: Array<object> = []
+    public musicInfo: object
 
     async afterRead(file: any) {
         console.log('console.log', file)
@@ -33,6 +46,7 @@ export default class MakeSlide extends Vue {
             file.status = 'success';
             file.message = '上传完成';
             file.fileName = info.fileName
+            file.pictureId = info.pictureId
         } else {
             file.status = 'failed';
             file.message = '上传失败';
@@ -41,15 +55,32 @@ export default class MakeSlide extends Vue {
 
     makeSlide() {
         const id = this.$route.query.id ? this.$route.query.id : ''
-        const title = '相册哈哈哈'
-        const description = '相册哈哈哈description'
         const template = 'template1'
-        const music = '123.mp3'
-        const data = this.fileList.map((item: any, index) => {
-            return item.status === 'success' ? {fileName: item.fileName, index: index} : ''
+        const picList = this.fileList.map((item: any, index) => {
+            return item.status === 'success' ? {fileName: item.fileName, index: index, pictureId: item.pictureId} : ''
         })
-        this.$post('/slide/edit', {data, id, title, description, template, music})
-        console.log('上传数据：', data)
+        this.$post('/slide/edit', {
+            picList,
+            id,
+            title: this.title,
+            description: this.description,
+            template,
+            music: this.musicInfo.musicSrc
+        })
+    }
+
+    toggleMusicSheet() {
+        if (this.showMusicSheet) {
+            this.showMusicSheet = false
+        } else {
+            this.showMusicSheet = true
+        }
+    }
+
+    // 选择背景音乐
+    onSelectMusic(item: any) {
+        this.showMusicSheet = false
+        this.musicInfo = item
     }
 
 }

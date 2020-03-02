@@ -3,7 +3,7 @@ import axios from 'axios'
 import qs from 'qs'
 
 // axios 配置
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 15000;
 axios.defaults.withCredentials = false;
 //设定axios的基本的url请求前缀
 axios.defaults.baseURL = process.env.VUE_APP_BASE_API;
