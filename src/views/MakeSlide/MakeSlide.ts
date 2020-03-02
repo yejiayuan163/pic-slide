@@ -28,12 +28,13 @@ import {Tabbar, TabbarItem, Uploader, Button, Field, CellGroup, ActionSheet} fro
 export default class MakeSlide extends Vue {
     public fileList: Array<string> = []
     public musicList: Array<object> = []
-    public title: string
-    public showMusicSheet: boolean
-    public description: string
+    public title!: string
+    public showMusicSheet!: boolean
+    public description!: string
     public $post: any
+    public $route: any
     public slideList: Array<object> = []
-    public musicInfo: object
+    public musicInfo!: any
 
     async afterRead(file: any) {
         console.log('console.log', file)
